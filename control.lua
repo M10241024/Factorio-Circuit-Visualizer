@@ -11,13 +11,6 @@ local INPUT_OUTPUT_COMBINATORS = {
 local MAX_ENITIES_FROM_GET_CONNECTED_ENTITIES = 1000
 
 --[[
-    TODO:
-        - hide all networks
-        - reload
-        - remove the "do nothing setting"
-]]
-
---[[
 {
     [player] = {
         entities = {
@@ -603,7 +596,7 @@ end
 
 script.on_load(
     function()
-        commands.add_command("circuit_visualizer_hide_networks", "command-help-cv", function(event)
+        commands.add_command("circuit_visualizer_hide_networks", nil, function(event)
             local player = game.get_player(event.player_index)
             if event.parameter == "all" and player and player.admin then
                 rendering.clear("circuit_visualizer")
