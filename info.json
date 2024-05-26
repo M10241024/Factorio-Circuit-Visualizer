@@ -1,0 +1,9 @@
+{
+  "name": "circuit_visualizer",
+  "version": "0.0.0",
+  "title": "Circuit Visualizer",
+  "description": "Similar to the `Pipe Visualizer` mod, but for circut network. Works with modded combinators but is a little bit buggy.",
+  "author": "_1024",
+  "factorio_version": "1.1",
+  "dependencies": [ "base >= 1.1.86", "flib >= 0.13.0" ]
+}
