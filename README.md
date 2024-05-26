@@ -16,7 +16,7 @@ Also useful for updating bugged entities by hovering them.
 With whole network mode on the `V` kay and mouse-over visualization will spread over all connected networks eg. trough combinators. I reccomend having it always on.
 
 # Bugs
-The visualizetion updates when:
+The visualization updates when:
 - an entity is destroyed.
 - a player connects or disconnects two entities.
 It does not update when:
