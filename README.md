@@ -13,12 +13,13 @@ Use a shortcut to visualize hovered networks.
 Also useful for updating bugged entities by hovering them.
 
 # Whole network mode
-With whole network mode on the `V` kay and mouse-over visualization will spread over all connected networks eg. trough combinators. I reccomend having it always on.
+With whole network mode on the `V` key and mouse-over visualization will spread over all connected networks eg. trough combinators. I reccomend having it always on.
 
 # Bugs
 The visualization updates when:
 - an entity is destroyed.
 - a player connects or disconnects two entities.
+
 It does not update when:
 - a blueprint with circuit connections is placed.
 - any other case.

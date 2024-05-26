@@ -198,7 +198,7 @@ local function visualize_entity(player, entity, visualize_network)
         if in_correct_network then
             local color, color_offset = get_color_and_offset(player, connection.wire, network_id, false)
             local extra_from_offset = get_extra_offset(entity, connection.source_circuit_id)
-            if connection.target_entity.unit_number and connection.target_entity.unit_number < entity.unit_number then
+            if connection.target_entity.unit_number and connection.target_entity.unit_number <= entity.unit_number then
                 local extra_to_offset = get_extra_offset(connection.target_entity, connection.target_circuit_id)
                 local line = rendering.draw_line{
                     color = color,
