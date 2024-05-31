@@ -1,6 +1,6 @@
 {
   "name": "circuit_visualizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "title": "Circuit Visualizer",
   "description": "Similar to the `Pipe Visualizer` mod, but for circuit networks.",
   "author": "_1024",
