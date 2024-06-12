@@ -594,22 +594,19 @@ local function on_tick(player)
     end
 end
 
-script.on_load(
-    function()
-        commands.add_command("circuit_visualizer_hide_networks", nil, function(event)
-            local player = game.get_player(event.player_index)
-            if event.parameter == "all" and player and player.admin then
-                rendering.clear("circuit_visualizer")
-                for player_id, _ in pairs(global) do
-                    global[player_id] = nil
-                    local current_player = game.get_player(player_id)
-                    current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
-                end
-            elseif player then
-                hide_all_networks(player)
+commands.add_command("circuit_visualizer_hide_networks", nil,
+    function(event)
+        local player = game.get_player(event.player_index)
+        if event.parameter == "all" and player and player.admin then
+            rendering.clear("circuit_visualizer")
+            for player_id, _ in pairs(global) do
+                global[player_id] = nil
+                local current_player = game.get_player(player_id)
+                current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
             end
+        elseif player then
+            hide_all_networks(player)
         end
-        )
     end
 )
 
