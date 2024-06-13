@@ -41,7 +41,7 @@ There is an extra option to randomise the darknes per network to help differenti
 You can change the color of both networks in settings.
 You can change the overlay opacity in settings.
 There is a shortcut to hide all networks.
-There is a command `circuit_visualizer_hide_networks` that works the same as the shortcut and `circuit_visualizer_hide_networks all` that hides all networks for all players.
+There is a command `/circuit_visualizer_hide_networks` that works the same as the shortcut and `/circuit_visualizer_hide_networks all` that hides all networks for all players.
 
 # Compatibility
 [UPS-friendly Selector combinator](https://mods.factorio.com/mod/selector-combinator) and [Crafting Combinator](https://mods.factorio.com/mod/crafting_combinator) do work, but look a little bit weird.

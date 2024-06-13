@@ -11,18 +11,24 @@ local INPUT_OUTPUT_COMBINATORS = {
 local MAX_ENITIES_FROM_GET_CONNECTED_ENTITIES = 1000
 
 --[[
+TODO:
+- [ ] visualization when an entity is connected to itself
+- [x] bug: when a combinator is connected to itself, pressing "v" or hovering over it doesn't do anything
+]]
+
+--[[
 {
     [player] = {
         entities = {
             [entity_id] = {
                 entity = entity,
-                rendered_objects = {
+                rendered_objects = { -- ids of lines and circles
                     length = 2,
                     0 = rendered_object,
                     1 = rendered_object,
                 },
                 visualized_connections = {
-                    [connected_entity_id] = 0,
+                    [connected_entity_id] = 0, -- visualized in a different way
                     [connected_entity_id] = 1, -- visualized by the "V" key
                 },
             }
@@ -81,6 +87,10 @@ local function get_connected_entities(entity, network_id)
     local networks = {}
     if network_id then
         networks[network_id] = true
+    else
+        for new_network_id, _ in pairs(get_connected_networks(entity)) do
+            networks[new_network_id] = true
+        end
     end
     local i = 1
     local last = 1
@@ -89,17 +99,15 @@ local function get_connected_entities(entity, network_id)
             local new_entity = connection.target_entity
             if new_entity.unit_number then
                 local not_added_already = not added_entity_ids[new_entity.unit_number]
-                if not_added_already then
-                    local on_correct_network = not network_id or network_id == entities_to_add[i].get_circuit_network(connection.wire, connection.source_circuit_id).network_id
-                    if on_correct_network then
-                        last = last + 1
-                        entities_to_add[last] = new_entity
-                        added_entity_ids[new_entity.unit_number] = true
-                        added_entities[new_entity] = true
-                        if not network_id then
-                            for new_network_id, _ in pairs(get_connected_networks(new_entity)) do
-                                networks[new_network_id] = true
-                            end
+                local on_correct_network = not network_id or network_id == entities_to_add[i].get_circuit_network(connection.wire, connection.source_circuit_id).network_id
+                if not_added_already and on_correct_network then
+                    last = last + 1
+                    entities_to_add[last] = new_entity
+                    added_entity_ids[new_entity.unit_number] = true
+                    added_entities[new_entity] = true
+                    if not network_id then
+                        for new_network_id, _ in pairs(get_connected_networks(new_entity)) do
+                            networks[new_network_id] = true
                         end
                     end
                 end
@@ -187,10 +195,10 @@ local function visualize_entity(player, entity, visualize_network)
     end
     entity_data.rendered_objects = {length = 0}
     entity_data.visualized_connections = {length = 0}
-    -- render new connections and nodes
+    --- render new connections and nodes
     local rendered_objects = entity_data.rendered_objects
     local visualized_connections = entity_data.visualized_connections
-    local network_colors = {} -- {[network_id] = {color = color, offset = offset}}
+    local network_colors_and_offsets = {} -- {[network_id] = {color = color, offset = offset}}
     -- render connections
     for _, connection in ipairs(entity.circuit_connection_definitions or {}) do
         local network_id = entity.get_circuit_network(connection.wire, connection.source_circuit_id).network_id
@@ -223,14 +231,21 @@ local function visualize_entity(player, entity, visualize_network)
             if connection.target_entity.unit_number then
                 visualized_connections[connection.target_entity.unit_number] = in_correct_network
             end
-
-            network_colors[network_id] = {
+            
+            network_colors_and_offsets[network_id] = {
                 color = color,
                 offset = {
                     x = color_offset.x + extra_from_offset.x,
                     y = color_offset.y + extra_from_offset.y,
                 }
             }
+
+            if connection.target_entity.unit_number == entity.unit_number then
+                network_colors_and_offsets[network_id].offset_2 = {
+                    x = color_offset.x - extra_from_offset.x,
+                    y = color_offset.y - extra_from_offset.y,
+                }
+            end
         end
     end
     -- nothing was rendered
@@ -240,7 +255,7 @@ local function visualize_entity(player, entity, visualize_network)
     end
     script.register_on_entity_destroyed(entity)
     -- render nodes
-    for _, network_data in pairs(network_colors) do
+    for _, network_data in pairs(network_colors_and_offsets) do
         local circle = rendering.draw_circle{
             color = network_data.color,
             filled = true,
@@ -252,6 +267,19 @@ local function visualize_entity(player, entity, visualize_network)
         }
         rendered_objects[rendered_objects.length] = circle
         rendered_objects.length = (rendered_objects.length or 0) + 1
+        if network_data.offset_2 then
+            local circle = rendering.draw_circle{
+                color = network_data.color,
+                filled = true,
+                radius = 0.125,
+                target = entity,
+                target_offset = network_data.offset_2,
+                surface = entity.surface,
+                players = {player},
+            }
+            rendered_objects[rendered_objects.length] = circle
+            rendered_objects.length = (rendered_objects.length or 0) + 1
+        end
     end
 end
 
