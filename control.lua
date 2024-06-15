@@ -11,12 +11,6 @@ local INPUT_OUTPUT_COMBINATORS = {
 local MAX_ENITIES_FROM_GET_CONNECTED_ENTITIES = 1000
 
 --[[
-TODO:
-- [ ] visualization when an entity is connected to itself
-- [x] bug: when a combinator is connected to itself, pressing "v" or hovering over it doesn't do anything
-]]
-
---[[
 {
     [player] = {
         entities = {
@@ -67,7 +61,7 @@ local function is_entity_valid(entity)
 end
 
 local function get_connected_networks(entity)
-    if not entity then return {} end
+    if not is_entity_valid(entity) then return {} end
     local connections = entity.circuit_connection_definitions
     if not connections then return {} end
     local network_ids = {}
@@ -80,7 +74,7 @@ local function get_connected_networks(entity)
 end
 
 local function get_connected_entities(entity, network_id)
-    if not entity.valid or not entity or not entity.unit_number then return {} end
+    if not is_entity_valid(entity) then return {} end
     local entities_to_add = {entity}
     local added_entity_ids = {[entity.unit_number] = true}
     local added_entities = {[entity] = true}
@@ -432,7 +426,7 @@ end
 local function on_visualize_network(player, selected_entity)
     --- update all connected entities
     -- check if player and entity exist
-    if not player or not selected_entity then return end
+    if not player or not is_entity_valid(selected_entity) then return end
     -- prepare variables
     setup_player_data(player.index)
     local whole_network_visualization = player.is_shortcut_toggled(NAMESPACE .. "toggle_whole_network")
