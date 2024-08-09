@@ -167,6 +167,20 @@ local function get_extra_offset(entity, connector_id)
     end
 end
 
+-- offset from the node circle
+local function get_node_offset(node, target)
+    local x1 = node.position.x
+    local y1 = node.position.y
+    local x2 = target.position.x
+    local y2 = target.position.y
+    local dx = x2 - x1
+    local dy = y2 - y1
+    local l = math.sqrt(dx * dx + dy * dy)
+    dx = dx / l
+    dy = dy / l
+    return { x = 0.25 * dx, y = 0.25 * dy }
+end
+
 local function visualize_entity(player, entity, visualize_network)
     -- check if player and entity even exist
     if not player or not entity or not entity.unit_number then return end
@@ -202,18 +216,20 @@ local function visualize_entity(player, entity, visualize_network)
             local extra_from_offset = get_extra_offset(entity, connection.source_circuit_id)
             if connection.target_entity.unit_number and connection.target_entity.unit_number <= entity.unit_number and entity.surface == connection.target_entity.surface then
                 local extra_to_offset = get_extra_offset(connection.target_entity, connection.target_circuit_id)
-                local line = rendering.draw_line{
+                local from_node_offset = get_node_offset(entity, connection.target_entity)
+                local to_node_offset = get_node_offset(connection.target_entity, entity)
+                local line = rendering.draw_line {
                     color = color,
                     width = 2,
                     from = entity,
                     to = connection.target_entity,
                     from_offset = {
-                        x = color_offset.x + extra_from_offset.x,
-                        y = color_offset.y + extra_from_offset.y,
+                        x = color_offset.x + extra_from_offset.x + from_node_offset.x,
+                        y = color_offset.y + extra_from_offset.y + from_node_offset.y,
                     },
                     to_offset = {
-                        x = color_offset.x + extra_to_offset.x,
-                        y = color_offset.y + extra_to_offset.y,
+                        x = color_offset.x + extra_to_offset.x + to_node_offset.x,
+                        y = color_offset.y + extra_to_offset.y + to_node_offset.y,
                     },
                     surface = entity.surface,
                     players = {player},
