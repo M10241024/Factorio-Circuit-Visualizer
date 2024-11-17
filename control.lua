@@ -723,23 +723,25 @@ local function on_tick(player)
     end
 end
 
-commands.add_command("circuit_visualizer_hide_networks", nil,
-    function(event)
-        local player = game.get_player(event.player_index)
-        if event.parameter == "all" and player and player.admin then
-            rendering.clear("circuit_visualizer")
-            for player_id, _ in pairs(storage) do
-                storage[player_id] = nil
-                local current_player = game.get_player(player_id)
-                if current_player then
-                    current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
+if not commands.commands["circuit_visualizer_hide_networks"] then
+    commands.add_command("circuit_visualizer_hide_networks", nil,
+        function(event)
+            local player = game.get_player(event.player_index)
+            if event.parameter == "all" and player and player.admin then
+                rendering.clear("circuit_visualizer")
+                for player_id, _ in pairs(storage) do
+                    storage[player_id] = nil
+                    local current_player = game.get_player(player_id)
+                    if current_player then
+                        current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
+                    end
                 end
+            elseif player then
+                hide_all_networks(player)
             end
-        elseif player then
-            hide_all_networks(player)
         end
-    end
-)
+    )
+end
 
 script.on_event(defines.events.on_lua_shortcut,
     function(event)
