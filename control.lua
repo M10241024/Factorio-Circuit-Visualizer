@@ -809,3 +809,7 @@ script.on_event(defines.events.on_tick,
         end
     end
 )
+
+return {
+    update_all_entities = update_all_entities,
+}

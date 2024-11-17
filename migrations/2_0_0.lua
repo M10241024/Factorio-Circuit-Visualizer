@@ -7,4 +7,3 @@ for player_id, _ in pairs(storage) do
         ControlScript.update_all_entities(player)
     end
 end
-
