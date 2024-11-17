@@ -1,5 +1,5 @@
 
-local NAMESPACE = "cv_"
+local NAMESPACE = "circuit_visualizer_"
 
 local overlay_opacity = {
     name = NAMESPACE .. "overlay_opacity",

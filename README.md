@@ -2,18 +2,18 @@ A mod similar to [Pipe Visualizer](https://mods.factorio.com/mod/PipeVisualizer)
 
 # Visualize all networks
 Use a shortcut to visualize all circuit connections.
-Visualization appears around the selected entity so it should work with radars.
+Visualization appears around the selected entity so it should work in remote viev.
 
 # Visualize selected networks
-Select a connected entity and press `V` to visualize a network.
-Press `V` again to hide it.
+Select a connected entity and press `Alt + V` to visualize a network.
+Press `Alt + V` again to hide it.
 
 # Visualize hovered networks
 Use a shortcut to visualize hovered networks.
 Also useful for updating bugged entities by hovering them.
 
 # Whole network mode
-With whole network mode on the `V` key and mouse-over visualization will spread over all connected networks eg. trough combinators. I reccomend having it always on.
+With whole network mode on the `Alt + V` key and mouse-over visualization will spread over all connected networks eg. trough combinators. I recommend having it always on.
 
 ![Whole network mode off](https://github.com/M10241024/Factorio-Circuit-Visualizer/blob/main/screenshots/whole_network_mode_off.png)
 ![Whole network mode on](https://github.com/M10241024/Factorio-Circuit-Visualizer/blob/main/screenshots/visualization_on.png)
@@ -41,7 +41,7 @@ There is an extra option to randomise the darknes per network to help differenti
 You can change the color of both networks in settings.
 You can change the overlay opacity in settings.
 There is a shortcut to hide all networks.
-There is a command `/circuit_visualizer_hide_networks` that works the same as the shortcut and `/circuit_visualizer_hide_networks all` that hides all networks for all players.
+There is a command `/circuit_visualizer_hide_networks` that works the same as the shortcut and `/circuit_visualizer_hide_networks all` that hides all networks for all players and clears the memory.
 
 # Compatibility
 [UPS-friendly Selector combinator](https://mods.factorio.com/mod/selector-combinator) and [Crafting Combinator](https://mods.factorio.com/mod/crafting_combinator) do work, but look a little bit weird.

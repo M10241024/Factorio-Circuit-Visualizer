@@ -1,0 +1,19 @@
+
+{
+    "custom-input": [
+        ["cv_visualize_network", "circuit_visualizer_visualize_network"]
+    ],
+    "mod-setting": [
+        ["cv_overlay_opacity", "circuit_visualizer_overlay_opacity"],
+        ["cv_red_network_color", "circuit_visualizer_red_network_color"],
+        ["cv_green_network_color", "circuit_visualizer_green_network_color"],
+        ["cv_max_brightness_change", "circuit_visualizer_max_brightness_change"]
+    ],
+    "shortcut": [
+        ["cv_toggle_overlay", "circuit_visualizer_toggle_overlay"],
+        ["cv_toggle_mouseover", "circuit_visualizer_toggle_mouseover"],
+        ["cv_toggle_whole_network", "circuit_visualizer_toggle_whole_network"],
+        ["cv_hide_all", "circuit_visualizer_hide_all"],
+        ["cv_reload_all", "circuit_visualizer_reload_all"]
+    ]
+}
