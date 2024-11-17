@@ -731,7 +731,9 @@ commands.add_command("circuit_visualizer_hide_networks", nil,
             for player_id, _ in pairs(storage) do
                 storage[player_id] = nil
                 local current_player = game.get_player(player_id)
-                current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
+                if current_player then
+                    current_player.set_shortcut_toggled(NAMESPACE .. "toggle_overlay", false)
+                end
             end
         elseif player then
             hide_all_networks(player)
